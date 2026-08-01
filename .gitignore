@@ -1,0 +1,15 @@
+# build artifacts
+build/
+*.o
+*.exe
+*.out
+vector4
+
+# Data files (keep the raw data,ignore porcessed)
+data/*.csv
+data/*.png
+
+# IDE files
+*.swp
+*.swo
+
