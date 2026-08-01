@@ -124,31 +124,6 @@ Vector 4 is built around a few principles:
 - **Portable:** Written in standard C
 - **Understandable:** Physics and algorithms remain inspectable
 
----
-
-## The Name
-
-### Vector
-
-A vector represents a quantity with magnitude and direction, reflecting the state-based nature of physical systems.
-
-### 4
-
-The initial system state has four dimensions:
-
-```
-[x, θ, vx, ω]
-```
-
-where:
-
-- `x` — cart position
-- `θ` — pole angle
-- `vx` — cart velocity
-- `ω` — angular velocity
-
----
-
 ## License
 
 MIT License
