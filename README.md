@@ -1,7 +1,6 @@
 <p align="center">
   <img src="assets/vector4_lockup_dark.svg" width="800">
 </p>
-# Vector 4
 
 **A minimal, real-time, differentiable physics engine in C for embedded robotics.**
 
