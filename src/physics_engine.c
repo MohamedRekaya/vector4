@@ -14,6 +14,7 @@ void physics_step(state_t *s, control_t *u, float dt, params_t *p) {
   float L = p->length;
   float g = p->gravity;
   float damp = p->damping;
+  float pivot_damp = p->pivot_damping;
   float F = u->force;
 
   float sin_t = sinf(s->theta);
@@ -26,7 +27,7 @@ void physics_step(state_t *s, control_t *u, float dt, params_t *p) {
       denom;
 
   // FIXED: Pole angular acceleration for INVERTED pendulum
-  float alpha = (g * sin_t + cos_t * ax) / L; // CORRECT: plus signs
+  float alpha = (g * sin_t + cos_t * ax) / L - pivot_damp * s->omega;
 
   // Semi-implicit Euler integration
   s->vx += ax * dt;

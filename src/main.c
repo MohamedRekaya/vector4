@@ -11,7 +11,7 @@
 // ============================================================
 
 // Case 1: FREE FALL - No force, pole evolves naturally
-// #define TEST_FREE_FALL
+#define TEST_FREE_FALL
 
 // Case 2: IMPULSE - Single push at t=1s
 // #define TEST_IMPULSE
@@ -20,7 +20,7 @@
 // #define TEST_STEP_RESPONSE
 
 // Case 4: SINE WAVE - Oscillating force
-#define TEST_SINE_WAVE
+// #define TEST_SINE_WAVE
 
 // Case 5: HANGING PENDULUM - Natural oscillation
 // #define TEST_HANGING_PENDULUM
@@ -42,7 +42,8 @@ int main(void) {
                 .mass_pole = 0.1f,
                 .length = 0.5f,
                 .gravity = 9.81f,
-                .damping = 0.0f};
+                .damping = 0.0f,
+                .pivot_damping = 0.1f};
 
   // ============================================================
   // INITIAL STATE

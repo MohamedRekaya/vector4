@@ -20,6 +20,7 @@ typedef struct {
   float length;
   float gravity;
   float damping;
+  float pivot_damping;
 } params_t;
 
 void physics_step(state_t *s, control_t *u, float dt, params_t *p);
