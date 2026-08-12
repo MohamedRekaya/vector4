@@ -10,6 +10,11 @@ SRC_DIR = src
 BUILD_DIR = build
 DATA_DIR = data
 SCRIPT_DIR = scripts
+UI_DIR = ui
+
+# SDL2 flags
+SDL_CFLAGS = $(shell pkg-config --cflags sdl2)
+SDL_LIBS = $(shell pkg-config --libs sdl2) -lSDL2_gfx
 
 # Detect OS and set image viewer
 UNAME_S := $(shell uname -s)
@@ -29,11 +34,17 @@ SRCS = $(SRC_DIR)/main.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
+# Viewer source files (main.c removed)
+VIEWER_SRCS = $(UI_DIR)/viewer.c \
+              $(UI_DIR)/graphics.c
+
+VIEWER_TARGET = cartpole_viewer
+
 # ============================================================
 # Targets
 # ============================================================
 
-.PHONY: all run plot show plot-show clean help
+.PHONY: all run plot show plot-show clean help viewer viewer-run
 
 all: $(TARGET)
 
@@ -47,13 +58,25 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 # ============================================================
+# Viewer (SDL2 Graphics)
+# ============================================================
+
+viewer: $(VIEWER_TARGET)
+
+$(VIEWER_TARGET): $(VIEWER_SRCS)
+	$(CC) $(CFLAGS) $(SDL_CFLAGS) -D_GNU_SOURCE -o $@ $^ $(SDL_LIBS) $(LDFLAGS)
+
+viewer-run: $(VIEWER_TARGET)
+	./$(VIEWER_TARGET) $(DATA_DIR)/simulation.csv
+
+# ============================================================
 # Run
 # ============================================================
 
 run: $(TARGET)
 	./$(TARGET) > $(DATA_DIR)/simulation.csv
 	@echo "Simulation complete. Data saved to $(DATA_DIR)/simulation.csv"
-	@echo "Run 'make plot' to visualize."
+	@echo "Run 'make viewer-run' to visualize."
 
 # ============================================================
 # Plot
@@ -88,7 +111,7 @@ plot-show: plot show
 # ============================================================
 
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET) $(DATA_DIR)/*.csv $(DATA_DIR)/*.png
+	rm -rf $(BUILD_DIR) $(TARGET) $(VIEWER_TARGET) $(DATA_DIR)/*.csv $(DATA_DIR)/*.png
 	@echo "Cleaned."
 
 # ============================================================
@@ -96,11 +119,16 @@ clean:
 # ============================================================
 
 help:
-	@echo "Vector 4 - Makefile Commands:"
-	@echo "  make          - Build the project"
-	@echo "  make run      - Build and run simulation (generates CSV)"
-	@echo "  make plot     - Generate plot from CSV"
-	@echo "  make show     - Open the PNG image"
-	@echo "  make plot-show - Plot and open in one command"
-	@echo "  make clean    - Remove build artifacts"
-	@echo "  make help     - Show this help"
+	@echo "Vector4 - Makefile Commands:"
+	@echo ""
+	@echo "  make            - Build the physics simulation"
+	@echo "  make run        - Build and run simulation (generates CSV)"
+	@echo "  make plot       - Generate plot from CSV"
+	@echo "  make show       - Open the PNG image"
+	@echo "  make plot-show  - Plot and open in one command"
+	@echo ""
+	@echo "  make viewer     - Build the SDL2 visualization viewer"
+	@echo "  make viewer-run - Build and run viewer with current CSV"
+	@echo ""
+	@echo "  make clean      - Remove build artifacts"
+	@echo "  make help       - Show this help"
