@@ -30,7 +30,8 @@ endif
 
 # Source files
 SRCS = $(SRC_DIR)/main.c \
-       $(SRC_DIR)/physics_engine.c
+       $(SRC_DIR)/physics_engine.c \
+			 $(SRC_DIR)/mpc_core.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 

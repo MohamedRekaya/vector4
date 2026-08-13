@@ -256,7 +256,7 @@ int main(int argc, char *argv[]) {
 
     // Draw pole
     float pole_len = 0.5f * SCALE;
-    float end_x = cart_x + pole_len * sinf(d->theta);
+    float end_x = cart_x - pole_len * sinf(d->theta);
     float end_y = cart_y - pole_len * cosf(d->theta);
 
     // Pole (red, thick)
